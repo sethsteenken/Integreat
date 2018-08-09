@@ -1,4 +1,6 @@
-﻿namespace Integreat
+﻿using Integreat.Plugins;
+
+namespace Integreat.Core
 {
     /// <summary>
     /// Execution step that is part of the execution plan.
@@ -6,6 +8,6 @@
     public interface IExecutable
     {
         string Name { get; }
-        void Execute(ExecutionContext context);
+        void Execute(ExecutableContext context);
     }
 }

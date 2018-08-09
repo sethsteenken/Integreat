@@ -1,7 +1,7 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
-namespace Integreat
+namespace Integreat.Core
 {
     /// <summary>
     /// Available types of execution languages/processes.

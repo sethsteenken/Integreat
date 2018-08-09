@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Integreat
+namespace Integreat.Core
 {
     public class Process : IProcess
     {
@@ -17,7 +17,13 @@ namespace Integreat
 
         public void Execute()
         {
-            throw new NotImplementedException();
+            //if (Executables == null || Executables.Count == 0)
+            //    throw new InvalidOperationException("There are no Executables registered in the Execution Plan.");
+
+            //foreach (var executable in Executables)
+            //{
+            //    executable.Execute(new ExecutionContext(IntegrationDirectory, ExecutablesDirectory));
+            //}
         }
     }
 }

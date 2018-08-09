@@ -1,4 +1,4 @@
-﻿namespace Integreat
+﻿namespace Integreat.Core
 {
     public class IntegrationSettings : IIntegrationSettings
     {

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Integreat
+namespace Integreat.Core
 {
     public interface IProcess
     {

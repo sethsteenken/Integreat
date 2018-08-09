@@ -1,6 +1,6 @@
-﻿namespace Integreat
+﻿namespace Integreat.Core
 {
-    public static class StringExtensions
+    internal static class StringExtensions
     {
         /// <summary>
         /// If <paramref name="value"/> contains a space, value is returned inside escaped double quotations;
