@@ -1,20 +1,17 @@
 ﻿using Integreat.Core;
 using Microsoft.Extensions.Logging;
 using System;
-using System.Collections.Generic;
 using System.Text;
 
 namespace Integreat
 {
     public sealed class Process : IProcess
     {
-        private readonly IReadOnlyList<IExecutable> _executables;
         private readonly ILogger<Process> _logger;
         private readonly StringBuilder _resultBuilder;
 
-        public Process(IReadOnlyList<IExecutable> executables, ILogger<Process> logger)
+        public Process(ILogger<Process> logger)
         {
-            _executables = executables;
             _logger = logger;
             Id = Guid.NewGuid();
             _resultBuilder = new StringBuilder();
@@ -22,18 +19,25 @@ namespace Integreat
 
         public Guid Id { get; private set; }
 
-        public string Result => _resultBuilder.ToString();
-
-        public void Execute()
+        // TODO - this will probably need to change - need params and timeout, etc
+        public string Execute(IExecutionPlan executionPlan)
         {
-            if (_executables == null || _executables.Count == 0)
+            Guard.IsNotNull(executionPlan, nameof(executionPlan));
+
+            if (executionPlan.Executables == null || executionPlan.Executables.Count == 0)
                 throw new InvalidOperationException("There are no Executables registered in the Execution Plan.");
 
-            foreach (var executable in _executables)
+            foreach (var executable in executionPlan.Executables)
             {
-                // TODO
-                executable.Execute(new ExecutableContext("integrationDir", "executablesDir", new ExecutableParameters(), 60, Log));
+                executable.Execute(new ExecutableContext(
+                    executionPlan.IntegrationDirectory,
+                    executionPlan.ExecutablesDirectory,
+                    new ExecutableParameters(), // TODO - get params?
+                    60, // TODO - timeout
+                    Log));
             }
+
+            return _resultBuilder.ToString();
         }
 
         private void Log(string message)
