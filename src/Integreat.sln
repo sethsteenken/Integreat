@@ -17,6 +17,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Integreat", "Integreat\Inte
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Integreat.Powershell", "Integreat.Powershell\Integreat.Powershell.csproj", "{B25EB664-3170-4626-ADFD-324B5913E5B4}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Integreat.SQL", "Integreat.SQL\Integreat.SQL.csproj", "{245CB552-BB10-4CC0-B31D-4B55E3EE76D5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +53,10 @@ Global
 		{B25EB664-3170-4626-ADFD-324B5913E5B4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B25EB664-3170-4626-ADFD-324B5913E5B4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B25EB664-3170-4626-ADFD-324B5913E5B4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{245CB552-BB10-4CC0-B31D-4B55E3EE76D5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{245CB552-BB10-4CC0-B31D-4B55E3EE76D5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{245CB552-BB10-4CC0-B31D-4B55E3EE76D5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{245CB552-BB10-4CC0-B31D-4B55E3EE76D5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
