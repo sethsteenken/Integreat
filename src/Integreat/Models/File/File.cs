@@ -1,5 +1,4 @@
-﻿using Integreat.Internal;
-using System.IO;
+﻿using System.IO;
 
 namespace Integreat
 {

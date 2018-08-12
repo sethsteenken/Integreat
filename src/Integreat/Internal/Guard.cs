@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Integreat.Internal
+namespace Integreat
 {
     public static class Guard
     {
