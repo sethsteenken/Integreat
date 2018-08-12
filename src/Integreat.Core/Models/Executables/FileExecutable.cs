@@ -1,19 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Integreat.Plugins;
+using System;
 using System.IO;
-using System.Text;
-using Integreat.Plugins;
 
 namespace Integreat.Core
 {
     public abstract class FileExecutable : ExecutableBase
     {
-        //protected FileExecutable(IProcess process, IFileStorage fileStorage, ExecutableReference reference)
-        //    : this(process, fileStorage, reference.Timeout, reference.Parameters, reference.File)
-        //{
-
-        //}
-
         protected FileExecutable(IFileStorage fileStorage, string file)
         {
             if (string.IsNullOrWhiteSpace(file))

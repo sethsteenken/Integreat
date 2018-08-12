@@ -11,7 +11,7 @@ namespace Integreat.Core
         void Write(string filePath, string content);
         void Delete(string path);
         void CreateDirectory(string path);
-        void WaitForFileReady(string filePath, int timeout);
+        void WaitForFileReady(string filePath, int timeoutInSeconds, int interval = 500);
         string CopyFile(string fromFilePath, string toFilePath);
         string Extract(string filePath, string outputDirectory);
     }
