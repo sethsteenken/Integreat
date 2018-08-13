@@ -15,7 +15,7 @@ namespace Integreat.Powershell
             {
                 foreach (var parameter in parameters)
                 {
-                    instance.AddParameter(parameter.Name, parameter.Value);
+                    instance.AddParameter(parameter.Key, parameter.Value);
                 }
             }
         }

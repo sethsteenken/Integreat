@@ -1,6 +1,7 @@
 ﻿using Integreat.Core;
 using System;
 using System.Diagnostics;
+using System.IO;
 using System.Text;
 
 namespace Integreat
@@ -95,7 +96,7 @@ namespace Integreat
         {
             var sb = new StringBuilder();
 
-            string libraryPath = System.IO.Path.Combine(context.ExecutablesDirectory, "plugins", GetAssemblyFileName(_typeAssemblyName));
+            string libraryPath = Path.Combine(context.ExecutablesDirectory, "plugins", GetAssemblyFileName(_typeAssemblyName));
 
             sb.AppendKeyValueArgument("integrationdirectory", context.IntegrationDirectory);
             sb.AppendKeyValueArgument("executablesdirectory", context.ExecutablesDirectory);
@@ -107,7 +108,7 @@ namespace Integreat
             {
                 foreach (var parameter in context.Parameters)
                 {
-                    sb.AppendKeyValueArgument(parameter.Name, parameter.Value.ToString());
+                    sb.AppendKeyValueArgument(parameter.Key, parameter.Value.ToString());
                 }
             }
 

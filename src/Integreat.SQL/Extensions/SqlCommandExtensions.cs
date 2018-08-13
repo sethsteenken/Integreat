@@ -11,7 +11,7 @@ namespace Integreat.SQL
 
             foreach (var parameter in parameters)
             {
-                command.Parameters.Add(new SqlParameter(parameter.Name, parameter.Value));
+                command.Parameters.Add(new SqlParameter(parameter.Key, parameter.Value));
             }
         }
     }

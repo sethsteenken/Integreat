@@ -30,7 +30,7 @@ namespace Integreat
 
         private void ExecuteProcess(ProcessStartInfo processStartInfo, ExecutableContext context)
         {
-            context.Log($"Starting new Windows process...");
+            context.Log($"Starting new process...");
             context.Log($"Arguments: {processStartInfo.Arguments}");
 
             using (var process = System.Diagnostics.Process.Start(processStartInfo))
