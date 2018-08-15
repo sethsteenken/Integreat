@@ -19,21 +19,19 @@ namespace Integreat
 
         public Guid Id { get; private set; }
 
-        // TODO - this will probably need to change - need params and timeout, etc
-        public string Execute(IExecutionPlan executionPlan)
+        public string Execute(ProcessExecutionContext context)
         {
-            Guard.IsNotNull(executionPlan, nameof(executionPlan));
+            Guard.IsNotNull(context, nameof(context));
 
-            if (executionPlan.Executables == null || executionPlan.Executables.Count == 0)
-                throw new InvalidOperationException("There are no Executables registered in the Execution Plan.");
+            // TODO - validate the context has executables on the Execution_Plan level
 
-            foreach (var executable in executionPlan.Executables)
+            foreach (var executableReference in context.Executables)
             {
-                executable.Execute(new ExecutableContext(
-                    executionPlan.IntegrationDirectory,
-                    executionPlan.ExecutablesDirectory,
-                    new ExecutableParameters(), // TODO - get params?
-                    60, // TODO - timeout
+                executableReference.Executable.Execute(new ExecutableContext(
+                    context.IntegrationDirectory,
+                    context.ExecutablesDirectory,
+                    executableReference.Parameters,
+                    executableReference.Timeout,
                     Log));
             }
 

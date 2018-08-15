@@ -7,19 +7,6 @@ namespace Integreat.Powershell
 {
     public static class PowershellExtensions
     {
-        public static void AddParameters(this PowerShell instance, ExecutableParameters parameters)
-        {
-            Guard.IsNotNull(instance, nameof(instance));
-
-            if (parameters != null)
-            {
-                foreach (var parameter in parameters)
-                {
-                    instance.AddParameter(parameter.Key, parameter.Value);
-                }
-            }
-        }
-
         public static bool Execute(this PowerShell instance, out string result)
         {
             Guard.IsNotNull(instance, nameof(instance));
