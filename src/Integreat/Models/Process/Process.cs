@@ -21,20 +21,66 @@ namespace Integreat
 
         public string Execute(ProcessExecutionContext context)
         {
-            Guard.IsNotNull(context, nameof(context));
-
             // TODO - validate the context has executables on the Execution_Plan level
 
-            foreach (var executableReference in context.Executables)
+            Guard.IsNotNull(context, nameof(context));
+
+            string workingDirectory = null;
+
+            try
             {
-                executableReference.Executable.Execute(new ExecutableContext(
-                    context.IntegrationDirectory,
-                    context.ExecutablesDirectory,
-                    executableReference.Parameters,
-                    executableReference.Timeout,
-                    Log));
+                Log("******** Integration Process Started ********");
+                Log($"File Path: {context.FilePath}");
+
+                // TODO
+                //var workingFile = _fileHandler.CopyToWorkingDirectory(filePath);
+                //workingDirectory = workingFile.Directory;
+
+                // TODO
+                //if (Settings.ArchiveIntegration)
+                //    _archiveService.Archive(workingFile.FullPath);
+
+                // TODO
+                //string processingDirectory = _fileHandler.GetProcessingDirectory(workingDirectory, workingFile.FullPath);
+
+                // TODO
+                //var executionPlan = _executionPlanHandler.ConstructExecutionPlan(processingDirectory);
+
+                Log("**** Beginning Executables processing. ****");
+
+                foreach (var executableReference in context.Executables)
+                {
+                    executableReference.Executable.Execute(new ExecutableContext(
+                        context.IntegrationDirectory,
+                        context.ExecutablesDirectory,
+                        executableReference.Parameters,
+                        executableReference.Timeout,
+                        Log));
+                }
+
+                Log("**** Executables processing completed successfully. ****");
+            }
+            catch (Exception ex)
+            {
+                Log("** FAILURE **");
+                Log($"Process EXCEPTION: {ex}");
+                _logger.LogError(ex, ex.Message);
+            }
+            finally
+            {
+                try
+                {
+                    // TODO
+                    //_finalizer.OnComplete(success, workingDirectory);
+                    Log("******** Integration Process Complete ********");
+                }
+                catch (Exception ex)
+                {
+                    _logger.LogError(ex, ex.Message);
+                }
             }
 
+           
             return _resultBuilder.ToString();
         }
 
