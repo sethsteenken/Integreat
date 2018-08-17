@@ -63,7 +63,7 @@ namespace Integreat
                 _watcher.EnableRaisingEvents = false;
 
                 IProcess process = _processFactory.Create();
-                process.Execute(new ProcessExecutionContext() { FilePath = e.FullPath });
+                process.Execute(e.FullPath);
 
                 _watcher.EnableRaisingEvents = true;
             }

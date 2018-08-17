@@ -7,30 +7,28 @@ namespace Integreat
 {
     public sealed class Process : IProcess
     {
-        private readonly ILogger<Process> _logger;
-        private readonly StringBuilder _resultBuilder;
+        private readonly IProcessLogger _logger;
 
-        public Process(ILogger<Process> logger)
+        public Process(IProcessLogger logger)
         {
             _logger = logger;
             Id = Guid.NewGuid();
-            _resultBuilder = new StringBuilder();
         }
 
         public Guid Id { get; private set; }
 
-        public string Execute(ProcessExecutionContext context)
+        public string Execute(string filePath)
         {
             // TODO - validate the context has executables on the Execution_Plan level
 
-            Guard.IsNotNull(context, nameof(context));
+            Guard.IsNotNull(filePath, nameof(filePath));
 
             string workingDirectory = null;
 
             try
             {
-                Log("******** Integration Process Started ********");
-                Log($"File Path: {context.FilePath}");
+                _logger.LogInfo("******** Integration Process Started ********");
+                _logger.LogInfo($"File Path: {filePath}");
 
                 // TODO
                 //var workingFile = _fileHandler.CopyToWorkingDirectory(filePath);
@@ -46,25 +44,26 @@ namespace Integreat
                 // TODO
                 //var executionPlan = _executionPlanHandler.ConstructExecutionPlan(processingDirectory);
 
-                Log("**** Beginning Executables processing. ****");
+                _logger.LogInfo("**** Beginning Executables processing. ****");
 
-                foreach (var executableReference in context.Executables)
-                {
-                    executableReference.Executable.Execute(new ExecutableContext(
-                        context.IntegrationDirectory,
-                        context.ExecutablesDirectory,
-                        executableReference.Parameters,
-                        executableReference.Timeout,
-                        Log));
-                }
+                // TODO
+                //foreach (var executableReference in context.Executables)
+                //{
+                //    executableReference.Executable.Execute(new ExecutableContext(
+                //        context.IntegrationDirectory,
+                //        context.ExecutablesDirectory,
+                //        executableReference.Parameters,
+                //        executableReference.Timeout,
+                //        _logger.LogInfo));
+                //}
 
-                Log("**** Executables processing completed successfully. ****");
+                _logger.LogInfo("**** Executables processing completed successfully. ****");
             }
             catch (Exception ex)
             {
-                Log("** FAILURE **");
-                Log($"Process EXCEPTION: {ex}");
-                _logger.LogError(ex, ex.Message);
+                _logger.LogInfo("** FAILURE **");
+                _logger.LogInfo($"Process EXCEPTION: {ex}");
+                _logger.LogError(ex);
             }
             finally
             {
@@ -72,22 +71,15 @@ namespace Integreat
                 {
                     // TODO
                     //_finalizer.OnComplete(success, workingDirectory);
-                    Log("******** Integration Process Complete ********");
+                    _logger.LogInfo("******** Integration Process Complete ********");
                 }
                 catch (Exception ex)
                 {
-                    _logger.LogError(ex, ex.Message);
+                    _logger.LogError(ex);
                 }
             }
 
-           
-            return _resultBuilder.ToString();
-        }
-
-        private void Log(string message)
-        {
-            _logger.LogInformation(message);
-            _resultBuilder.AppendLine(LogFormatter.FormatMessage(message));
+            return _logger.ToString();
         }
     }
 }
