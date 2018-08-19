@@ -8,11 +8,13 @@ namespace Integreat
     public class ProcessLogger : IProcessLogger
     {
         private readonly ILogger<ProcessLogger> _logger;
+        private readonly Guid _processId;
         private readonly StringBuilder _resultBuilder;
 
-        public ProcessLogger(ILogger<ProcessLogger> logger)
+        public ProcessLogger(ILogger<ProcessLogger> logger, Guid processId)
         {
             _logger = logger;
+            _processId = processId;
             _resultBuilder = new StringBuilder();
         }
 

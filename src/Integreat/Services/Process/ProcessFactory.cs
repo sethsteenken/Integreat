@@ -14,7 +14,8 @@ namespace Integreat
 
         public IProcess Create()
         {
-            return new Process(null);
+            //TODO - build dependencies for process and return correct process
+            return new Process();
         }
     }
 }

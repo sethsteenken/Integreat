@@ -8,11 +8,20 @@ namespace Integreat
     public sealed class Process : IProcess
     {
         private readonly IProcessLogger _logger;
+        private readonly IIntegrationFileHandler _fileHandler;
+        private readonly IIntegrationArchiver _archiver;
 
-        public Process(IProcessLogger logger)
+        // TODO - remove after class is completed
+        internal Process() { }
+
+        public Process(Guid id, IProcessLogger logger, IIntegrationFileHandler fileHandler, IIntegrationArchiver archiver)
         {
+            Guard.IsNotEmptyGuid(id, nameof(id));
+
             _logger = logger;
-            Id = Guid.NewGuid();
+            _fileHandler = fileHandler;
+            _archiver = archiver;
+            Id = id;
         }
 
         public Guid Id { get; private set; }
@@ -27,19 +36,16 @@ namespace Integreat
 
             try
             {
-                _logger.LogInfo("******** Integration Process Started ********");
+                _logger.LogInfo("******** Process Started ********");
                 _logger.LogInfo($"File Path: {filePath}");
+                _logger.LogInfo($"Process ID: {Id}");
 
-                // TODO
-                //var workingFile = _fileHandler.CopyToWorkingDirectory(filePath);
-                //workingDirectory = workingFile.Directory;
+                var workingFile = _fileHandler.CopyToWorkingDirectory(filePath, Id);
+                workingDirectory = workingFile.Directory;
 
-                // TODO
-                //if (Settings.ArchiveIntegration)
-                //    _archiveService.Archive(workingFile.FullPath);
+                _archiver.Archive(workingFile.FullPath, Id);
 
-                // TODO
-                //string processingDirectory = _fileHandler.GetProcessingDirectory(workingDirectory, workingFile.FullPath);
+                string processingDirectory = _fileHandler.GetProcessingDirectory(workingDirectory, workingFile.FullPath);
 
                 // TODO
                 //var executionPlan = _executionPlanHandler.ConstructExecutionPlan(processingDirectory);
@@ -71,7 +77,7 @@ namespace Integreat
                 {
                     // TODO
                     //_finalizer.OnComplete(success, workingDirectory);
-                    _logger.LogInfo("******** Integration Process Complete ********");
+                    _logger.LogInfo("******** Process Complete ********");
                 }
                 catch (Exception ex)
                 {
