@@ -34,9 +34,8 @@ namespace Integreat
             if (!type.GetProperties().Any(p => p.Name.Equals("Executables")))
                 throw new InvalidOperationException("Execution plan does not contain Executables.");
 
-            // TODO - change this up per the builder changes below - these are temporary to show concept of what needs to happen
-            IDictionary<string, ExecutableConfiguration> configurations = new Dictionary<string, ExecutableConfiguration>();
-            IDictionary<string, IExecutable> executableRegistrations = new Dictionary<string, IExecutable>();
+            // TODO - need these registered/injected somewhere - type "string" lookup => adapter
+            IDictionary<string, IProcessExecutableAdapter> adapters = new Dictionary<string, IProcessExecutableAdapter>();
 
             var processExecutables = new List<ProcessExecutable>();
 
@@ -48,16 +47,10 @@ namespace Integreat
 
                 string executableType = executableReference.Type as string;
 
-                // TODO - change this to some sort of builder that will take the string Type AND the dynamic object in order to build out ExecutableConfiguration
-                //      - a builder may be needed for each ExecutableConfiguration type, and then register each builder
-                if (!configurations.TryGetValue(executableType, out ExecutableConfiguration config))
-                    throw new InvalidOperationException($"Executable of type '{executableType}' was not found in available configurations.");
+                if (!adapters.TryGetValue(executableType, out IProcessExecutableAdapter adapter))
+                    throw new InvalidOperationException($"Executable of type '{executableType}' does not have a registered adapter to build the configuration and executable.");
 
-                // TODO - change this to some sort of builder because the IExecutable relies on the provided ExecutableConfiguration
-                if (!executableRegistrations.TryGetValue(executableType, out IExecutable executable))
-                    throw new InvalidOperationException($"Executable of type '{executableType}' was not found in registered executable types.");
-
-                processExecutables.Add(new ProcessExecutable(executable, config));
+                processExecutables.Add(adapter.Build(executableReference));
             }
 
             return new ExecutionPlan(
