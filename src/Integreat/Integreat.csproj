@@ -14,4 +14,8 @@
     <ProjectReference Include="..\Integreat.Core\Integreat.Core.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Models\Configuration\" />
+  </ItemGroup>
+
 </Project>

@@ -59,6 +59,7 @@ namespace Integreat
                 executablesDirectory: file.Directory);
         }
 
+        // TODO - move functionality to another class
         private IFile GetConfigFile(string directory)
         {
             IFile file = null;

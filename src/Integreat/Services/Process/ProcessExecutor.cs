@@ -18,6 +18,9 @@ namespace Integreat
         {         
             var executionPlan = _executionPlanFactory.Create(processDirectory);
 
+            if (executionPlan == null)
+                throw new InvalidOperationException("Execution plan empty or null.");
+
             foreach (var executableReference in executionPlan.Executables)
             {
                 executableReference.Executable.Execute(new ExecutableContext(
