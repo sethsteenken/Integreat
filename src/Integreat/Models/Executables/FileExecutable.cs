@@ -18,7 +18,7 @@ namespace Integreat
         protected string File { get; private set; }
         protected IFileStorage FileStorage { get; private set; }
 
-        public override string Name => $"Type: {GetType().Name}, File: {File}";
+        protected override string Name => $"Type: {GetType().Name}, File: {File}";
 
         protected override void OnExecute(ExecutableContext context)
         { 

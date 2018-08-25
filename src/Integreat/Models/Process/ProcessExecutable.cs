@@ -1,11 +1,14 @@
-﻿using Integreat.Core;
-
-namespace Integreat
+﻿namespace Integreat
 {
     public sealed class ProcessExecutable
     {
+        public ProcessExecutable(IExecutable executable, ExecutableConfiguration configuration)
+        {
+            Executable = executable;
+            Configuration = configuration;
+        }
+
         public IExecutable Executable { get; private set; }
-        public int Timeout { get; private set; }
-        public ExecutableParameters Parameters { get; private set; }
+        public ExecutableConfiguration Configuration { get; private set; }
     }
 }

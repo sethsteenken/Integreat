@@ -13,7 +13,7 @@ namespace Integreat.Core
         {
             IntegrationDirectory = string.IsNullOrWhiteSpace(integrationDirectory) ? throw new ArgumentNullException(nameof(integrationDirectory)) : integrationDirectory.Trim();
             ExecutablesDirectory = string.IsNullOrWhiteSpace(executablesDirectory) ? throw new ArgumentNullException(nameof(executablesDirectory)) : executablesDirectory.Trim();
-            Parameters = parameters ?? new ExecutableParameters();
+            Parameters = parameters ?? ExecutableParameters.Empty;
             Timeout = timeout <= 0 ? 60 : timeout;
             _logAction = logAction;
         }

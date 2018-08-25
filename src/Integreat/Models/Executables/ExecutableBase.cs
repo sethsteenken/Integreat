@@ -6,7 +6,7 @@ namespace Integreat
 {
     public abstract class ExecutableBase : IExecutable
     {
-        public abstract string Name { get; }
+        protected abstract string Name { get; }
 
         protected abstract void OnExecute(ExecutableContext context);
 

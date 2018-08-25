@@ -23,8 +23,8 @@ namespace Integreat
                 executableReference.Executable.Execute(new ExecutableContext(
                     executionPlan.IntegrationDirectory,
                     executionPlan.ExecutablesDirectory,
-                    executableReference.Parameters,
-                    executableReference.Timeout,
+                    new ExecutableParameters(executableReference.Configuration.Parameters),
+                    executableReference.Configuration.Timeout,
                     _logger.LogInfo));
             }
         }

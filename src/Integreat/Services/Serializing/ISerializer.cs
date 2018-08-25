@@ -2,6 +2,6 @@
 {
     public interface ISerializer
     {
-        T Deserialize<T>(string serializedValue) where T : class;
+        T DeserializeFile<T>(string filePath) where T : class;
     }
 }

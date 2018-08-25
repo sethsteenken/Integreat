@@ -6,6 +6,14 @@ namespace Integreat.Core
 {
     public sealed class ExecutableParameters : Dictionary<string, string>
     {
+        private ExecutableParameters() { }
+
+        public ExecutableParameters(IDictionary<string, string> parameters)
+            : base(parameters)
+        {
+
+        }
+
         public string Get(string key)
         {
             return Get(key, required: true);
@@ -47,5 +55,7 @@ namespace Integreat.Core
 
             return string.Join(",", this.Select(p => $"{p.Key}={p.Value}")).Trim();
         }
+
+        public static readonly ExecutableParameters Empty = new ExecutableParameters();
     }
 }

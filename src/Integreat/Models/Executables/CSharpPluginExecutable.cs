@@ -35,7 +35,7 @@ namespace Integreat
 
         protected string TypeFullName => $"{_typeName}, {_typeAssemblyName}";
 
-        public override string Name => $"Type: {GetType().Name}, Plugin: {TypeFullName}";
+        protected override string Name => $"Type: {GetType().Name}, Plugin: {TypeFullName}";
 
         protected override void OnExecute(ExecutableContext context)
         {

@@ -7,7 +7,6 @@ namespace Integreat
     /// </summary>
     public interface IExecutable
     {
-        string Name { get; }
         void Execute(ExecutableContext context);
     }
 }
