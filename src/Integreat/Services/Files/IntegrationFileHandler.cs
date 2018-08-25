@@ -16,7 +16,7 @@ namespace Integreat
             _settings = settings;
         }
 
-        public IFile CopyToWorkingDirectory(string filePath, Guid processId)
+        public IFile CopyToWorkingDirectory(Guid processId, string filePath)
         {
             _logger.LogInfo("Waiting on file to be ready...");
             _fileStorage.WaitForFileReady(filePath, _settings.DropFileReadyTimeout);
@@ -60,15 +60,15 @@ namespace Integreat
             return _fileStorage.GetFile(Path.Combine(directory, droppedFile.FileName));
         }
 
-        public string GetProcessingDirectory(string workingDirectory, string workingFilePath)
+        public string GetProcessingDirectory(IFile workingFile)
         {
-            var file = _fileStorage.GetFile(workingFilePath);
+            Guard.IsNotNull(workingFile, nameof(workingFile));
 
             // unzip if .zip file, else just use working directory assuming static file was dropped
-            if (NeedsExtraction(file))
-                return Unzip(file);
+            if (NeedsExtraction(workingFile))
+                return Unzip(workingFile);
             else
-                return workingDirectory;
+                return workingFile.Directory;
         }
 
         private bool NeedsExtraction(IFile file)

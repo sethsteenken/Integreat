@@ -1,26 +1,23 @@
-﻿using Integreat.Core;
-using Microsoft.Extensions.Logging;
-using System;
-using System.Text;
+﻿using System;
 
 namespace Integreat
 {
     public sealed class Process : IProcess
     {
         private readonly IProcessLogger _logger;
-        private readonly IIntegrationFileHandler _fileHandler;
-        private readonly IIntegrationArchiver _archiver;
+        private readonly IProcessSetup _processSetup;
+        private readonly IProcessExecutor _processExecutor;
 
         // TODO - remove after class is completed
         internal Process() { }
 
-        public Process(Guid id, IProcessLogger logger, IIntegrationFileHandler fileHandler, IIntegrationArchiver archiver)
+        public Process(Guid id, IProcessLogger logger, IProcessSetup processSetup, IProcessExecutor processExecutor)
         {
             Guard.IsNotEmptyGuid(id, nameof(id));
 
             _logger = logger;
-            _fileHandler = fileHandler;
-            _archiver = archiver;
+            _processSetup = processSetup;
+            _processExecutor = processExecutor;
             Id = id;
         }
 
@@ -28,11 +25,9 @@ namespace Integreat
 
         public string Execute(string filePath)
         {
-            // TODO - validate the context has executables on the Execution_Plan level
-
             Guard.IsNotNull(filePath, nameof(filePath));
 
-            string workingDirectory = null;
+            ProcessWorkingDirectoryContext processDirectoryContext = null;
 
             try
             {
@@ -40,28 +35,11 @@ namespace Integreat
                 _logger.LogInfo($"File Path: {filePath}");
                 _logger.LogInfo($"Process ID: {Id}");
 
-                var workingFile = _fileHandler.CopyToWorkingDirectory(filePath, Id);
-                workingDirectory = workingFile.Directory;
-
-                _archiver.Archive(workingFile.FullPath, Id);
-
-                string processingDirectory = _fileHandler.GetProcessingDirectory(workingDirectory, workingFile.FullPath);
-
-                // TODO
-                //var executionPlan = _executionPlanHandler.ConstructExecutionPlan(processingDirectory);
+                processDirectoryContext = _processSetup.SetupProcessDirectory(Id, filePath);
 
                 _logger.LogInfo("**** Beginning Executables processing. ****");
 
-                // TODO
-                //foreach (var executableReference in context.Executables)
-                //{
-                //    executableReference.Executable.Execute(new ExecutableContext(
-                //        context.IntegrationDirectory,
-                //        context.ExecutablesDirectory,
-                //        executableReference.Parameters,
-                //        executableReference.Timeout,
-                //        _logger.LogInfo));
-                //}
+                _processExecutor.Execute(Id, processDirectoryContext.ProcessDirectory);
 
                 _logger.LogInfo("**** Executables processing completed successfully. ****");
             }
@@ -76,7 +54,7 @@ namespace Integreat
                 try
                 {
                     // TODO
-                    //_finalizer.OnComplete(success, workingDirectory);
+                    //_finalizer.OnComplete(success, processDirectoryContext?.WorkingDirectory);
                     _logger.LogInfo("******** Process Complete ********");
                 }
                 catch (Exception ex)

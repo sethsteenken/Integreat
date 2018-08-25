@@ -4,7 +4,7 @@ namespace Integreat
 {
     public interface IIntegrationFileHandler
     {
-        IFile CopyToWorkingDirectory(string filePath, Guid processId);
-        string GetProcessingDirectory(string workingDirectory, string workingFilePath);
+        IFile CopyToWorkingDirectory(Guid processId, string filePath);
+        string GetProcessingDirectory(IFile workingFile);
     }
 }

@@ -16,7 +16,7 @@ namespace Integreat
             _settings = settings;
         }
 
-        public void Archive(string filePath, Guid processId)
+        public void Archive(Guid processId, string filePath)
         {
             if (!_settings.ArchiveIntegration)
                 return;

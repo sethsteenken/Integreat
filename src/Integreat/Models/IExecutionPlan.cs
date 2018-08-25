@@ -7,7 +7,7 @@ namespace Integreat
     /// </summary>
     public interface IExecutionPlan
     {
-        IReadOnlyList<IExecutable> Executables { get; }
+        IReadOnlyList<ProcessExecutable> Executables { get; }
         string IntegrationDirectory { get; }
         string ExecutablesDirectory { get; }
     }

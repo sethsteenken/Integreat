@@ -2,7 +2,7 @@
 
 namespace Integreat
 {
-    public class ProcessExecutable
+    public sealed class ProcessExecutable
     {
         public IExecutable Executable { get; private set; }
         public int Timeout { get; private set; }
