@@ -15,7 +15,7 @@ namespace Integreat
         {
             if (Exists(properties, propName))
             {
-                return (T)properties.FirstOrDefault(p => p.Name.EndsWith(propName)).GetValue(dynamicItem as object);
+                return (T)properties.FirstOrDefault(p => p.Name.Equals(propName)).GetValue(dynamicItem as object);
             }
             else if (required)
             {
