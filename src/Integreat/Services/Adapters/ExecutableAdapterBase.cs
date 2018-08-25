@@ -51,7 +51,7 @@ namespace Integreat
                 timeout = (int)((configurationValues.Timeout as int?) ?? 0);
 
             if (properties.Exists("Parameters"))
-                parameters = configurationValues.Timeout as Dictionary<string, string>;
+                parameters = configurationValues.Parameters as Dictionary<string, string>;
 
             return new ExecutableConfiguration(exeTypeName, timeout, parameters);
         }
