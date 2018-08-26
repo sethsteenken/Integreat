@@ -1,8 +1,9 @@
 ﻿using System;
+using System.Reflection;
 
 namespace Integreat
 {
-    public class BatchProcessExecutableAdapter : ExecutableAdapterBase, IProcessExecutableAdapter
+    public class BatchProcessExecutableAdapter : ProcessExecutableAdapter
     {
         private readonly IFileStorage _fileStorage;
 
@@ -11,16 +12,11 @@ namespace Integreat
             _fileStorage = fileStorage;
         }
 
-        public ProcessExecutable Build(dynamic configurationValues)
+        protected override IExecutable BuildExecutable(dynamic configurationValues, Type type, PropertyInfo[] properties)
         {
-            Guard.IsNotNull(configurationValues, nameof(configurationValues));
-
-            Type type = configurationValues.GetType();
-            var properties = type.GetProperties();
-
-            var executable = new BatchExecutable(_fileStorage, GetPropertyValue(properties, configurationValues, "File"));
-
-            return new ProcessExecutable(executable, GetConfiguration(configurationValues, type, properties));
+            return new BatchExecutable(
+                _fileStorage, 
+                GetPropertyValue(properties, configurationValues, "File"));
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
 
 namespace Integreat
 {
@@ -89,6 +90,34 @@ namespace Integreat
             _fileStorage.Extract(file.FullPath, outputDirectory);
             _logger.LogInfo("Extracting complete.");
             return outputDirectory;
+        }
+
+        public IFile FindExecutionPlanFile(string directory)
+        {
+            IFile file = null;
+            bool allowPlanWithIntegration = _settings.AllowExecutionPlanWithIntegration;
+            string appDirectory = AppDomain.CurrentDomain.BaseDirectory;
+
+            if (allowPlanWithIntegration)
+                file = _fileStorage.GetFiles(directory, _settings.ExecutionPlanFileName).FirstOrDefault();
+
+            // if not provided in integration, attempt to find it in root of this service application
+            if (file == null)
+                file = _fileStorage.GetFiles(appDirectory, _settings.ExecutionPlanFileName).FirstOrDefault();
+
+            if (file == null)
+            {
+                string message = $"Execution Plan configuration file '{_settings.ExecutionPlanFileName}' not found.";
+
+                if (allowPlanWithIntegration)
+                    message = string.Concat(message, " ", $"Searched integration directory and sub-directories at '{directory}'.");
+
+                message = string.Concat(message, " ", $"Searched for default execution plan file in application directory and sub-directories at '{appDirectory}'.");
+
+                throw new FileNotFoundException(message);
+            }
+
+            return file;
         }
     }
 }

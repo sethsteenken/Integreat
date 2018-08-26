@@ -1,8 +1,9 @@
 ﻿using System;
+using System.Reflection;
 
 namespace Integreat
 {
-    public class CSharpPluginProcessExecutableAdapter : ExecutableAdapterBase, IProcessExecutableAdapter
+    public class CSharpPluginProcessExecutableAdapter : ProcessExecutableAdapter
     {
         private readonly string _pluginExecutorAppPath;
 
@@ -11,19 +12,12 @@ namespace Integreat
             _pluginExecutorAppPath = pluginExecutorAppPath;
         }
 
-        public ProcessExecutable Build(dynamic configurationValues)
+        protected override IExecutable BuildExecutable(dynamic configurationValues, Type type, PropertyInfo[] properties)
         {
-            Guard.IsNotNull(configurationValues, nameof(configurationValues));
-
-            Type type = configurationValues.GetType();
-            var properties = type.GetProperties();
-
-            var executable = new CSharpPluginExecutable(
-                GetPropertyValue(properties, configurationValues, "TypeName"), 
-                GetPropertyValue(properties, configurationValues, "AssemblyName"), 
+            return new CSharpPluginExecutable(
+                GetPropertyValue(properties, configurationValues, "TypeName"),
+                GetPropertyValue(properties, configurationValues, "AssemblyName"),
                 _pluginExecutorAppPath);
-
-            return new ProcessExecutable(executable, GetConfiguration(configurationValues, type, properties));
         }
     }
 }

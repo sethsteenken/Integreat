@@ -4,6 +4,9 @@
     {
         public ProcessExecutable(IExecutable executable, ExecutableConfiguration configuration)
         {
+            Guard.IsNotNull(executable, nameof(executable));
+            Guard.IsNotNull(configuration, nameof(configuration));
+
             Executable = executable;
             Configuration = configuration;
         }

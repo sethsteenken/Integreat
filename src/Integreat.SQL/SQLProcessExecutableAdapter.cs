@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Data;
+using System.Reflection;
 
 namespace Integreat.SQL
 {
-    public class SQLProcessExecutableAdapter : ExecutableAdapterBase, IProcessExecutableAdapter
+    public class SQLProcessExecutableAdapter : ProcessExecutableAdapter
     {
         private readonly IFileStorage _fileStorage;
 
@@ -12,24 +13,17 @@ namespace Integreat.SQL
             _fileStorage = fileStorage;
         }
 
-        public ProcessExecutable Build(dynamic configurationValues)
+        protected override IExecutable BuildExecutable(dynamic configurationValues, Type type, PropertyInfo[] properties)
         {
-            Guard.IsNotNull(configurationValues, nameof(configurationValues));
-
-            Type type = configurationValues.GetType();
-            var properties = type.GetProperties();
-
             var commandTypeValue = GetPropertyValue(properties, configurationValues, "SqlCommandType", required: false);
             if (!Enum.TryParse<CommandType>(commandTypeValue, out CommandType commandType))
                 commandType = CommandType.Text;
 
-            var executable = new SQLExecutable(
-                _fileStorage, 
+            return new SQLExecutable(
+                _fileStorage,
                 GetPropertyValue(properties, configurationValues, "File"),
                 GetPropertyValue(properties, configurationValues, "ConnectionString"),
                 commandType);
-
-            return new ProcessExecutable(executable, GetConfiguration(configurationValues, type, properties));
         }
     }
 }

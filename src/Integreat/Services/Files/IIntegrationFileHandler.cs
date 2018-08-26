@@ -6,5 +6,6 @@ namespace Integreat
     {
         IFile CopyToWorkingDirectory(Guid processId, string filePath);
         string GetProcessingDirectory(IFile workingFile);
+        IFile FindExecutionPlanFile(string directory);
     }
 }
