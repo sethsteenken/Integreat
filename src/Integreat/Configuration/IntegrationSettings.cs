@@ -3,34 +3,19 @@
     public class IntegrationSettings : IIntegrationSettings
     {
         public string DropDirectory { get; set; }
-
-        public string DropFileName { get; set; }
-
-        public string ExecutionPlanFileName  { get; set; }
-        public bool AllowExecutionPlanWithIntegration { get; set; }
-
-        public string ServiceWorkingDirectory { get; set; }
-
-        public int DropFileReadyTimeout { get; set; }
-
-        public bool DeleteFromDropDirectory { get; set; }
-
-        public int ArchiveLimit { get; set; }
-
-        public string ArchiveDirectory { get; set; }
-
-        public bool ArchiveIntegration { get; set; }
-
+        public string DropFileName { get; set; } = "Integration.zip";
+        public string ExecutionPlanFileName { get; set; } = "Execution_Plan.json";
+        public bool AllowExecutionPlanWithIntegration { get; set; } = true;
+        public string ServiceWorkingDirectory { get; set; } = "__working";
+        public int DropFileReadyTimeout { get; set; } = 300;
+        public bool DeleteFromDropDirectory { get; set; } = true;
+        public int ArchiveLimit { get; set; } = 10;
+        public string ArchiveDirectory { get; set; } = "__archive";
+        public bool Archive { get; set; } = true;
         public string NotificationEmail { get; set; }
-
         public string NotificationFrom { get; set; }
-
         public string OnCompleteDroppedFileName { get; set; }
-
-        public bool DropFileOnComplete { get; set; }
-
-        public bool CleanUpWorkspace { get; set; }
-
-        public string PluginExecutorExePath { get; set; }
+        public bool CleanUpWorkspace { get; set; } = true;
+        public string PluginExecutorAppPath { get; set; } = "Integreat.PluginExecutor.exe";
     }
 }

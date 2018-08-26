@@ -11,12 +11,11 @@
         bool DeleteFromDropDirectory { get; }
         int ArchiveLimit { get; }
         string ArchiveDirectory { get; }
-        bool ArchiveIntegration { get; }
+        bool Archive { get; }
         string NotificationEmail { get; }
         string NotificationFrom { get; }
         string OnCompleteDroppedFileName { get; }
-        bool DropFileOnComplete { get; }
         bool CleanUpWorkspace { get; }
-        string PluginExecutorExePath { get; }
+        string PluginExecutorAppPath { get; }
     }
 }

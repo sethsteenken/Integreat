@@ -18,7 +18,7 @@ namespace Integreat
 
         public void Archive(Guid processId, string filePath)
         {
-            if (!_settings.ArchiveIntegration)
+            if (!_settings.Archive)
                 return;
 
             _logger.LogInfo("Archiving integration...");
