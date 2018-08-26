@@ -8,9 +8,6 @@ namespace Integreat
         private readonly IProcessSetup _processSetup;
         private readonly IProcessExecutor _processExecutor;
 
-        // TODO - remove after class is completed
-        internal Process() { }
-
         public Process(Guid id, IProcessLogger logger, IProcessSetup processSetup, IProcessExecutor processExecutor)
         {
             Guard.IsNotEmptyGuid(id, nameof(id));
