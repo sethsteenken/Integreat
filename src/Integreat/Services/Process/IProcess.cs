@@ -2,7 +2,7 @@
 
 namespace Integreat
 {
-    public interface IProcess
+    public interface IProcess : IDisposable
     {
         string Execute(string filePath);
     }
