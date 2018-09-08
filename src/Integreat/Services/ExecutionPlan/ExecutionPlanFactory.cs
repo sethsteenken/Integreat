@@ -30,6 +30,14 @@ namespace Integreat
             if (reference == null)
                 throw new InvalidOperationException("Deserialized result of Execution Plan is null or invalid.");
 
+            return new ExecutionPlan(
+                BuildProcessExecutables(reference),
+                integrationDirectory: processDirectory,
+                executablesDirectory: executionPlanFile.Directory);
+        }
+
+        private IReadOnlyList<ProcessExecutable> BuildProcessExecutables(dynamic reference)
+        {
             Type type = reference.GetType();
             if (!type.GetProperties().Any(p => p.Name.Equals("Executables")))
                 throw new InvalidOperationException("Execution plan does not contain Executables.");
@@ -50,10 +58,7 @@ namespace Integreat
                 processExecutables.Add(adapter.Build(executableReference));
             }
 
-            return new ExecutionPlan(
-                processExecutables,
-                integrationDirectory: processDirectory,
-                executablesDirectory: executionPlanFile.Directory);
+            return processExecutables;
         }
     }
 }

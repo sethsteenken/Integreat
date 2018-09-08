@@ -10,8 +10,6 @@ namespace Integreat
         {
             Guard.IsNotNull(services, nameof(services));
 
-            // TODO - change the return type a custom services builder to allow for devs to easily add their own adapters, etc.
-
             // TODO - load in integration settings from json file? look in appsettings with "Integreat" as the section? bring logic over from work lib
 
             // TODO - add microsoft logging if it doesn't exist?

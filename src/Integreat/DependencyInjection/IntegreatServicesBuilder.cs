@@ -2,7 +2,7 @@
 
 namespace Integreat
 {
-    internal class IntegreatServicesBuilder : IIntegreatServicesBuilder
+    internal sealed class IntegreatServicesBuilder : IIntegreatServicesBuilder
     {
         public IntegreatServicesBuilder(IServiceCollection services)
         {
