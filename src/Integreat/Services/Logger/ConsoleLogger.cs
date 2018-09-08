@@ -38,8 +38,7 @@ namespace Integreat
             if (!IsEnabled(logLevel))
                 return;
 
-            if (formatter == null)
-                throw new ArgumentNullException(nameof(formatter));
+            Guard.IsNotNull(formatter, nameof(formatter));
 
             var message = formatter(state, exception);
 

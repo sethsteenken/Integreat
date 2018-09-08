@@ -1,5 +1,4 @@
 ﻿using Integreat.Core;
-using System;
 using System.IO;
 
 namespace Integreat
@@ -8,8 +7,8 @@ namespace Integreat
     {
         protected FileExecutable(IFileStorage fileStorage, string file)
         {
-            if (string.IsNullOrWhiteSpace(file))
-                throw new ArgumentNullException(nameof(file), $"A filename value for File is required to execute {GetType().FullName} executable.");
+            Guard.IsNotNull(file, nameof(file), $"A filename value for File is required to execute {GetType().FullName} executable.");
+            Guard.IsNotNull(fileStorage, nameof(fileStorage));
 
             FileStorage = fileStorage;
             File = file.Trim();

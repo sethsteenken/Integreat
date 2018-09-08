@@ -14,11 +14,8 @@ namespace Integreat.CSharp
 
         public CSharpPluginExecutable(string type, string assembly, string pluginExectorPath)
         {
-            if (string.IsNullOrWhiteSpace(type))
-                throw new ArgumentNullException(nameof(type), $"TypeName value is required to execute {GetType().FullName} executable.");
-            if (string.IsNullOrWhiteSpace(assembly))
-                throw new ArgumentNullException(nameof(assembly), $"AssemblyName value is required to execute {GetType().FullName} executable.");
-
+            Guard.IsNotNull(type, nameof(type), $"TypeName value is required to execute {GetType().FullName} executable.");
+            Guard.IsNotNull(assembly, nameof(assembly), $"AssemblyName value is required to execute {GetType().FullName} executable.");
             Guard.IsNotNull(pluginExectorPath, nameof(pluginExectorPath));
 
             _typeName = type.Trim();

@@ -13,11 +13,7 @@ namespace Integreat.SQL
         public SQLExecutable(IFileStorage fileStorage, string file, string connectionString, CommandType commandType) 
             : base(fileStorage, file)
         {
-            if (string.IsNullOrWhiteSpace(connectionString))
-            {
-                throw new ArgumentNullException(nameof(connectionString),
-                       $"ConnectionString value is required to execute {GetType().FullName} executable.");
-            }
+            Guard.IsNotNull(connectionString, nameof(connectionString), $"ConnectionString value is required to execute {GetType().FullName} executable.");
 
             _connectionString = connectionString.Trim();
             _commandType = commandType;
