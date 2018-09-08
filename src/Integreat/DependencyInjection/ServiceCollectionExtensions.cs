@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -18,7 +19,12 @@ namespace Integreat
             if (!string.IsNullOrWhiteSpace(dropDirectory))
                 services.AddSingleton<IIntegrationSettings>(new IntegrationSettings() { DropDirectory = dropDirectory });
 
-            // TODO - add microsoft logging if it doesn't exist?
+            if (!services.Any(s => s.ServiceType == typeof(ILoggerFactory)))
+            {
+                services
+                    .AddSingleton<ILoggerFactory, ConsoleLoggerFactory>()
+                    .AddSingleton(typeof(ILogger<>), typeof(ConsoleLogger));
+            }
 
             services.AddSingleton<IFileStorage, SystemIOFileStorage>();
             services.AddSingleton<ISerializer, JsonNetSerializer>();

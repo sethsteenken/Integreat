@@ -9,11 +9,5 @@ namespace Integreat
             if (value == null || (value is string && string.IsNullOrWhiteSpace(value as string)))
                 throw new ArgumentNullException(paramName);
         }
-
-        public static void IsNotEmptyGuid(Guid value, string paramName)
-        {
-            if (value == Guid.Empty)
-                throw new ArgumentNullException(paramName);
-        }
     }
 }

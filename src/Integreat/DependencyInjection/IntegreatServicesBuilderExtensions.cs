@@ -44,7 +44,6 @@ namespace Integreat
         public static IIntegreatServicesBuilder AddSettings(this IIntegreatServicesBuilder builder, Func<IServiceProvider, IIntegrationSettings> settingsFactory)
         {
             return AddSettings(builder, settingsFactory, ServiceLifetime.Singleton);
-
         }
 
         public static IIntegreatServicesBuilder AddSettings(this IIntegreatServicesBuilder builder, Func<IServiceProvider, IIntegrationSettings> settingsFactory, ServiceLifetime lifetime)
