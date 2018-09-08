@@ -10,11 +10,8 @@ namespace Integreat
         {
             Guard.IsNotNull(services, nameof(services));
 
-            // TODO - load in integration settings from json file? look in appsettings with "Integreat" as the section? bring logic over from work lib
-
             // TODO - add microsoft logging if it doesn't exist?
 
-            services.AddSingleton<IIntegrationSettings, IntegrationSettings>();
             services.AddSingleton<IFileStorage, SystemIOFileStorage>();
             services.AddSingleton<ISerializer, JsonNetSerializer>();
             services.AddSingleton<IProcessFactory, ProcessFactory>();
