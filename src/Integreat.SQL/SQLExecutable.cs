@@ -16,7 +16,7 @@ namespace Integreat.SQL
             if (string.IsNullOrWhiteSpace(connectionString))
             {
                 throw new ArgumentNullException(nameof(connectionString),
-                       $"ConnectionString value is required to execute {GetType().FullName} executable. Add ConnectionString as a property on this executable definition in your Execution Plan.");
+                       $"ConnectionString value is required to execute {GetType().FullName} executable.");
             }
 
             _connectionString = connectionString.Trim();

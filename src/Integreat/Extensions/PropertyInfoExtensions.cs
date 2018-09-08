@@ -4,7 +4,7 @@ using System.Reflection;
 
 namespace Integreat
 {
-    public static class PropertyInfoExtensions
+    internal static class PropertyInfoExtensions
     {
         public static bool Exists(this PropertyInfo[] properties, string name)
         {

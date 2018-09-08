@@ -4,7 +4,7 @@ using System.Reflection;
 
 namespace Integreat
 {
-    public abstract class ProcessExecutableAdapter : IProcessExecutableAdapter 
+    public abstract class ProcessExecutableAdapter<T> : IProcessExecutableAdapter where T : IExecutable
     {
         protected string GetPropertyValue(PropertyInfo[] properties, dynamic value, string propName)
         {
@@ -37,6 +37,11 @@ namespace Integreat
             else
                 throw new MissingMemberException(type.FullName, "Type");
 
+            exeTypeName = exeTypeName.Replace("Executable", "");
+
+            if (exeTypeName != Type)
+                throw new InvalidOperationException($"Supplied Type configuration value '{exeTypeName}' does not match the registered adapter executable type of '{Type}'.");
+
             if (properties.Exists("Timeout"))
                 timeout = (int)((configurationValues.Timeout as int?) ?? 0);
 
@@ -46,7 +51,9 @@ namespace Integreat
             return new ExecutableConfiguration(exeTypeName, timeout, parameters);
         }
 
-        protected abstract IExecutable BuildExecutable(dynamic configurationValues, Type type, PropertyInfo[] properties);
+        protected abstract T BuildExecutable(dynamic configurationValues, Type type, PropertyInfo[] properties);
+
+        public virtual string Type => typeof(T).Name.Replace("Executable", "");
 
         public virtual ProcessExecutable Build(dynamic configurationValues)
         {

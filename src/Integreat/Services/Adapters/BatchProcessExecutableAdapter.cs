@@ -3,7 +3,7 @@ using System.Reflection;
 
 namespace Integreat
 {
-    public class BatchProcessExecutableAdapter : ProcessExecutableAdapter
+    public class BatchProcessExecutableAdapter : ProcessExecutableAdapter<BatchExecutable>
     {
         private readonly IFileStorage _fileStorage;
 
@@ -12,7 +12,7 @@ namespace Integreat
             _fileStorage = fileStorage;
         }
 
-        protected override IExecutable BuildExecutable(dynamic configurationValues, Type type, PropertyInfo[] properties)
+        protected override BatchExecutable BuildExecutable(dynamic configurationValues, Type type, PropertyInfo[] properties)
         {
             return new BatchExecutable(
                 _fileStorage, 

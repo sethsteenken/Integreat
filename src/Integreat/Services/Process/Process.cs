@@ -4,20 +4,18 @@ namespace Integreat
 {
     public sealed class Process : IProcess
     {
-        private bool _disposed = false; // To detect redundant calls
-
         private readonly IProcessLogger _logger;
         private readonly IProcessSetup _processSetup;
         private readonly IProcessExecutor _processExecutor;
 
-        public Process(Guid id, IProcessLogger logger, IProcessSetup processSetup, IProcessExecutor processExecutor)
+        internal Process(ProcessId id, IProcessLogger logger, IProcessSetup processSetup, IProcessExecutor processExecutor)
         {
-            Guard.IsNotEmptyGuid(id, nameof(id));
+            Guard.IsNotNull(id, nameof(ProcessId));
 
-            _logger = logger
+            Id = id.CurrentGuid;
+            _logger = logger;
             _processSetup = processSetup;
             _processExecutor = processExecutor;
-            Id = id;
         }
 
         public Guid Id { get; private set; }
@@ -63,27 +61,6 @@ namespace Integreat
             }
 
             return _logger.ToString();
-        }
-
-        private void Dispose(bool disposing)
-        {
-            if (!_disposed)
-            {
-                if (disposing)
-                {
-                    // TODO: dispose managed state (managed objects).
-                }
-
-                // TODO: free unmanaged resources (unmanaged objects) and override a finalizer below.
-                // TODO: set large fields to null.
-
-                _disposed = true;
-            }
-        }
-
-        public void Dispose()
-        {
-            Dispose(true);
         }
     }
 }

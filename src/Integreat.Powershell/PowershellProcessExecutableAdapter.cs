@@ -3,7 +3,7 @@ using System.Reflection;
 
 namespace Integreat.Powershell
 {
-    public class PowershellProcessExecutableAdapter : ProcessExecutableAdapter
+    public class PowershellProcessExecutableAdapter : ProcessExecutableAdapter<PowershellExecutable>
     {
         private readonly IFileStorage _fileStorage;
 
@@ -12,7 +12,7 @@ namespace Integreat.Powershell
             _fileStorage = fileStorage;
         }
 
-        protected override IExecutable BuildExecutable(dynamic configurationValues, Type type, PropertyInfo[] properties)
+        protected override PowershellExecutable BuildExecutable(dynamic configurationValues, Type type, PropertyInfo[] properties)
         {
             return new PowershellExecutable(
                 _fileStorage, 

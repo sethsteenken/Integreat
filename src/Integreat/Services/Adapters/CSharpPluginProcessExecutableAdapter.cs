@@ -3,7 +3,7 @@ using System.Reflection;
 
 namespace Integreat
 {
-    public class CSharpPluginProcessExecutableAdapter : ProcessExecutableAdapter
+    public class CSharpPluginProcessExecutableAdapter : ProcessExecutableAdapter<CSharpPluginExecutable>
     {
         private readonly string _pluginExecutorAppPath;
 
@@ -12,7 +12,7 @@ namespace Integreat
             _pluginExecutorAppPath = pluginExecutorAppPath;
         }
 
-        protected override IExecutable BuildExecutable(dynamic configurationValues, Type type, PropertyInfo[] properties)
+        protected override CSharpPluginExecutable BuildExecutable(dynamic configurationValues, Type type, PropertyInfo[] properties)
         {
             return new CSharpPluginExecutable(
                 GetPropertyValue(properties, configurationValues, "TypeName"),

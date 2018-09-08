@@ -4,7 +4,7 @@ using System.Reflection;
 
 namespace Integreat.SQL
 {
-    public class SQLProcessExecutableAdapter : ProcessExecutableAdapter
+    public class SQLProcessExecutableAdapter : ProcessExecutableAdapter<SQLExecutable>
     {
         private readonly IFileStorage _fileStorage;
 
@@ -13,7 +13,7 @@ namespace Integreat.SQL
             _fileStorage = fileStorage;
         }
 
-        protected override IExecutable BuildExecutable(dynamic configurationValues, Type type, PropertyInfo[] properties)
+        protected override SQLExecutable BuildExecutable(dynamic configurationValues, Type type, PropertyInfo[] properties)
         {
             var commandTypeValue = GetPropertyValue(properties, configurationValues, "SqlCommandType", required: false);
             if (!Enum.TryParse<CommandType>(commandTypeValue, out CommandType commandType))

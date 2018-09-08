@@ -11,10 +11,12 @@ namespace Integreat
         private readonly Guid _processId;
         private readonly StringBuilder _resultBuilder;
 
-        public ProcessLogger(ILogger<ProcessLogger> logger, Guid processId)
+        internal ProcessLogger(ILogger<ProcessLogger> logger, ProcessId processId)
         {
+            Guard.IsNotNull(processId, nameof(processId));
+
             _logger = logger;
-            _processId = processId;
+            _processId = processId.CurrentGuid;
             _resultBuilder = new StringBuilder();
         }
 
