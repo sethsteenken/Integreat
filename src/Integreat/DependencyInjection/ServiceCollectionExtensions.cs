@@ -22,7 +22,8 @@ namespace Integreat
 
             services.AddScoped<IDictionary<string, IProcessExecutableAdapter>>((serviceProvider) =>
             {
-                return serviceProvider.GetServices<IProcessExecutableAdapter>()?.ToDictionary((adapter) => adapter.Type);
+                return serviceProvider.GetServices<IProcessExecutableAdapter>()?.ToDictionary((adapter) => adapter.Type) 
+                            ?? new Dictionary<string, IProcessExecutableAdapter>();
             });
 
             services.AddScoped<ProcessId>()

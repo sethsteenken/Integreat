@@ -1,4 +1,5 @@
 ﻿using System;
+using Integreat.Core;
 
 namespace Integreat.PluginExecutor
 {
@@ -6,7 +7,29 @@ namespace Integreat.PluginExecutor
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            try
+            {
+                Executor executor = BuildExecutor(args);
+                var result = executor.ExecutePlugin();
+
+                Console.WriteLine(result);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(string.Concat(
+                    LogFormatter.FailedResultCode,
+                    Environment.NewLine,
+                    $"Exception: {ex}"));
+            }
+        }
+
+        static Executor BuildExecutor(string[] args)
+        {
+            var settings = new ExecutorSettings(args);
+            AssemblyTypeLoader assemblyLoader = new AssemblyTypeLoader(settings.LibraryPath, AppDomain.CurrentDomain);
+            PluginFactory pluginFactory = new PluginFactory(assemblyLoader);
+
+            return new Executor(settings, pluginFactory);
         }
     }
 }
