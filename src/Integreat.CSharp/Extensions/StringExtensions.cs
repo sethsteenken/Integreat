@@ -1,4 +1,4 @@
-﻿namespace Integreat
+﻿namespace Integreat.CSharp
 {
     internal static class StringExtensions
     {

@@ -1,8 +1,8 @@
 ﻿using System.Text;
 
-namespace Integreat
+namespace Integreat.CSharp
 {
-    public static class StringBuilderExtensions
+    internal static class StringBuilderExtensions
     {
         /// <summary>
         /// Appends <paramref name="key"/> and <paramref name="value"/> separated by "=".
