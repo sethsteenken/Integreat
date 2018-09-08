@@ -16,6 +16,5 @@
         string NotificationFrom { get; }
         string OnCompleteDroppedFileName { get; }
         bool CleanUpWorkspace { get; }
-        string PluginExecutorAppPath { get; }
     }
 }

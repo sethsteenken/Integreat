@@ -8,7 +8,15 @@ namespace Integreat
     {
         public static IIntegreatServicesBuilder AddIntegreat(this IServiceCollection services)
         {
+            return AddIntegreat(services, null);
+        }
+
+        public static IIntegreatServicesBuilder AddIntegreat(this IServiceCollection services, string dropDirectory)
+        {
             Guard.IsNotNull(services, nameof(services));
+
+            if (!string.IsNullOrWhiteSpace(dropDirectory))
+                services.AddSingleton<IIntegrationSettings>(new IntegrationSettings() { DropDirectory = dropDirectory });
 
             // TODO - add microsoft logging if it doesn't exist?
 
@@ -19,7 +27,7 @@ namespace Integreat
 
             services.AddScoped<IDictionary<string, IProcessExecutableAdapter>>((serviceProvider) =>
             {
-                return serviceProvider.GetServices<IProcessExecutableAdapter>()?.ToDictionary((adapter) => adapter.Type) 
+                return serviceProvider.GetServices<IProcessExecutableAdapter>()?.ToDictionary((adapter) => adapter.Type)
                             ?? new Dictionary<string, IProcessExecutableAdapter>();
             });
 

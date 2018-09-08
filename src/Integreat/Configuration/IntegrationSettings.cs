@@ -16,6 +16,5 @@
         public string NotificationFrom { get; set; }
         public string OnCompleteDroppedFileName { get; set; }
         public bool CleanUpWorkspace { get; set; } = true;
-        public string PluginExecutorAppPath { get; set; } = "Integreat.PluginExecutor.exe";
     }
 }
