@@ -4,7 +4,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Text;
 
-namespace Integreat
+namespace Integreat.CSharp
 {
     public class CSharpPluginExecutable : ExecutableBase
     {

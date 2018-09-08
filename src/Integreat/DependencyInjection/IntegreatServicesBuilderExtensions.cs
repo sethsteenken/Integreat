@@ -26,15 +26,5 @@ namespace Integreat
             builder.Services.Add(new ServiceDescriptor(typeof(IProcessExecutableAdapter), typeof(T), lifetime));
             return builder;
         }
-
-        public static IIntegreatServicesBuilder AddCSharpPluginExecutable(this IIntegreatServicesBuilder builder)
-        {
-            return builder.AddExecutableAdapter((serviceProvider) => new CSharpPluginProcessExecutableAdapter(serviceProvider.GetRequiredService<IIntegrationSettings>().PluginExecutorAppPath));
-        }
-
-        public static IIntegreatServicesBuilder AddBatchExecutable(this IIntegreatServicesBuilder builder)
-        {
-            return builder.AddExecutableAdapter<BatchProcessExecutableAdapter>();
-        }
     }
 }

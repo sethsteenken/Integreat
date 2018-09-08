@@ -2,7 +2,7 @@
 
 namespace Integreat
 {
-    internal static class StringBuilderExtensions
+    public static class StringBuilderExtensions
     {
         /// <summary>
         /// Appends <paramref name="key"/> and <paramref name="value"/> separated by "=".

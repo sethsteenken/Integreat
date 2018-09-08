@@ -3,7 +3,7 @@ using System;
 using System.Diagnostics;
 using System.Text;
 
-namespace Integreat
+namespace Integreat.Batch
 {
     public sealed class BatchExecutable : FileExecutable
     {

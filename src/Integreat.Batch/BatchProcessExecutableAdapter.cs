@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Reflection;
 
-namespace Integreat
+namespace Integreat.Batch
 {
     public class BatchProcessExecutableAdapter : ProcessExecutableAdapter<BatchExecutable>
     {
