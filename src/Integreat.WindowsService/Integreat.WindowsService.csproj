@@ -1,0 +1,66 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net471</TargetFramework>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{E2721D6A-4616-4678-BF57-167B70FE9520}</ProjectGuid>
+    <RootNamespace>Integreat.WindowsService</RootNamespace>
+    <AssemblyName>Integreat.WindowsService</AssemblyName>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  
+  <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
+    <OutputType>exe</OutputType>
+    <RunCommand>bin\Debug\net471\Integreat.WindowsService.exe</RunCommand>
+  </PropertyGroup>
+  
+  <PropertyGroup Condition="'$(Configuration)' != 'Debug'">
+    <OutputType>WinExe</OutputType>
+    <RunCommand>bin\Debug\net471\Integreat.WindowsService.exe</RunCommand>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Configuration.Install" />
+    <Reference Include="System.ServiceProcess" />
+  </ItemGroup>
+  
+  <!--	
+  <ItemGroup>	
+    <Compile Update="Installer.cs">	
+      <SubType>Component</SubType>	
+    </Compile>	
+    <Compile Update="IntegrationService.cs">	
+      <SubType>Component</SubType>	
+    </Compile>	
+    <Compile Update="IntegrationService.Designer.cs">	
+      <SubType>Component</SubType>	
+    </Compile>	
+  </ItemGroup>	
+   <PropertyGroup>	
+    <Version>1.0.0</Version>	
+    <FileVersion>1.0.0</FileVersion>	
+    <Authors>Seth Steenken</Authors>	
+    <Description>Windows Service for continuous integration.</Description>	
+    <Configuration></Configuration>	
+    <InformationalVersion>1.0.0</InformationalVersion>	
+    <AssemblyTitle>NetTango.Integration.Service</AssemblyTitle>	
+    <AssemblyVersion>1.0.0</AssemblyVersion>	
+    <Company>Net Tango, Inc.</Company>	
+    <Copyright>Copyright ©  2018</Copyright>	
+    <GeneratePackageOnBuild>False</GeneratePackageOnBuild>	
+    <ApplicationIcon />	
+    <OutputTypeEx>exe</OutputTypeEx>	
+    <StartupObject />	
+  </PropertyGroup>	
+-->
+</Project>
