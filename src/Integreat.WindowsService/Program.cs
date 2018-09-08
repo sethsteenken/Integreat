@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.ServiceProcess;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Integreat.WindowsService
+﻿namespace Integreat.WindowsService
 {
     static class Program
     {
@@ -14,12 +7,16 @@ namespace Integreat.WindowsService
         /// </summary>
         static void Main()
         {
-            ServiceBase[] ServicesToRun;
-            ServicesToRun = new ServiceBase[]
+            var services = new InteractiveServiceBase[]
             {
-                new Service1()
+                new IntegreatService()
             };
-            ServiceBase.Run(ServicesToRun);
+
+#if DEBUG
+            ServiceRunner.RunInteractive(services);
+#else
+            ServiceBase.Run(services);
+#endif
         }
     }
 }

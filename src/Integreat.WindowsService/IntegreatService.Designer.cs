@@ -1,6 +1,6 @@
 ﻿namespace Integreat.WindowsService
 {
-    partial class Service1
+    partial class IntegreatService
     {
         /// <summary> 
         /// Required designer variable.
