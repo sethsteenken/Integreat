@@ -43,7 +43,7 @@ namespace Integreat
             catch (Exception ex)
             {
                 _logger.LogInfo("** FAILURE **");
-                _logger.LogInfo($"Process EXCEPTION: {ex}");
+                _logger.LogInfo($"Process Error: {ex.Message}");
                 _logger.LogError(ex);
             }
             finally

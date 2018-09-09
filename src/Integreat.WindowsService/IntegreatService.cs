@@ -34,10 +34,27 @@ namespace Integreat.WindowsService
         {
             IServiceCollection services = new ServiceCollection();
 
-            // add your own logger/loggerfactory here
+            // add your own logger/loggerfactory here - by default, Integreat will log to the console
 
-            services.AddIntegreat(/*"my/drop/directory"*/)
-                    .AddJsonConfigurationSettings()
+            // register Integreat classes
+
+            var integreatServicesBuilder = services.AddIntegreat(/*"my/drop/directory"*/);
+
+            // if pulling settings from appsettings.json, using Integreat.Configuration
+
+            integreatServicesBuilder.AddJsonConfigurationSettings();
+
+            // OR add custom settings instance
+
+            //integreatServicesBuilder.AddSettings(new IntegrationSettings()
+            //{
+            //    DropDirectory = "my/drop/directory",
+            //    DropFileName = "deploy.zip",
+            //    Archive = false
+            //});
+
+            // add executable types that could be referenced by the integration process (execution plan)
+            integreatServicesBuilder
                     .AddCSharpPluginExecutable()
                     .AddPowershellExecutable()
                     .AddSQLExecutable()
