@@ -36,6 +36,7 @@
     <ProjectReference Include="..\Integreat.Batch\Integreat.Batch.csproj" />
     <ProjectReference Include="..\Integreat.Configuration\Integreat.Configuration.csproj" />
     <ProjectReference Include="..\Integreat.CSharp\Integreat.CSharp.csproj" />
+    <ProjectReference Include="..\Integreat.PluginExecutor\Integreat.PluginExecutor.csproj" />
     <ProjectReference Include="..\Integreat.Powershell\Integreat.Powershell.csproj" />
     <ProjectReference Include="..\Integreat.SQL\Integreat.SQL.csproj" />
     <ProjectReference Include="..\Integreat\Integreat.csproj" />
