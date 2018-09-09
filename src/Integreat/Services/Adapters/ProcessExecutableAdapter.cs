@@ -6,6 +6,11 @@ namespace Integreat
 {
     public abstract class ProcessExecutableAdapter<T> : IProcessExecutableAdapter where T : IExecutable
     {
+        protected ProcessExecutableAdapter()
+        {
+            Type = typeof(T).Name.Replace("Executable", "");
+        }
+
         protected string GetPropertyValue(PropertyInfo[] properties, dynamic value, string propName)
         {
             return GetPropertyValue(properties, value, propName, true);
@@ -53,7 +58,7 @@ namespace Integreat
 
         protected abstract T BuildExecutable(dynamic configurationValues, Type type, PropertyInfo[] properties);
 
-        public virtual string Type => typeof(T).Name.Replace("Executable", "");
+        public string Type { get; protected set; }
 
         public virtual ProcessExecutable Build(dynamic configurationValues)
         {
