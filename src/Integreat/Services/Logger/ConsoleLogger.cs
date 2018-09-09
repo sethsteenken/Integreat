@@ -54,12 +54,6 @@ namespace Integreat
             if (logBuilder == null)
                 logBuilder = new StringBuilder();
 
-            logBuilder.Append(": ");
-            logBuilder.Append(logName);
-            logBuilder.Append("[");
-            logBuilder.Append(eventId);
-            logBuilder.AppendLine("]");
-
             if (!string.IsNullOrEmpty(message))
                 logBuilder.AppendLine(message);
 

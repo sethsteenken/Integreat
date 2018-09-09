@@ -5,11 +5,6 @@ namespace Integreat.WindowsService
 {
     internal static class ServiceRunner
     {
-        /// <summary>
-        /// Execute Windows Services under a console window. Ref - https://stackoverflow.com/questions/125964/easier-way-to-debug-a-windows-service
-        /// Project file may require conditional in order to output "exe" on Debug ("winexe" for non-interactive Release).
-        /// </summary>
-        /// <param name="servicesToRun"></param>
         public static void RunInteractive(InteractiveServiceBase[] servicesToRun)
         {
             Console.WriteLine("Services running in interactive mode.");

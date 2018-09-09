@@ -23,7 +23,7 @@ namespace Integreat
             {
                 services
                     .AddSingleton<ILoggerFactory, ConsoleLoggerFactory>()
-                    .AddSingleton(typeof(ILogger<>), typeof(ConsoleLogger));
+                    .AddSingleton(typeof(ILogger<>), typeof(Logger<>));
             }
 
             services.AddSingleton<IFileStorage, SystemIOFileStorage>();
@@ -43,6 +43,7 @@ namespace Integreat
                 .AddScoped<IIntegrationFileHandler, IntegrationFileHandler>()
                 .AddScoped<IExecutionPlanFactory, ExecutionPlanFactory>()
                 .AddScoped<IProcessExecutor, ProcessExecutor>()
+                .AddScoped<IProcessSetup, ProcessSetup>()
                 .AddScoped<IProcess, Process>();
 
             return new IntegreatServicesBuilder(services);

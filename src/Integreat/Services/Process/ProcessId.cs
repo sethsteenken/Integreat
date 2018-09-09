@@ -2,7 +2,7 @@
 
 namespace Integreat
 {
-    internal class ProcessId
+    public sealed class ProcessId
     {
         public ProcessId()
         {

@@ -20,18 +20,37 @@
   
   <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
     <OutputType>exe</OutputType>
-    <RunCommand>bin\Debug\net471\Integreat.WindowsService.exe</RunCommand>
+    
   </PropertyGroup>
   
   <PropertyGroup Condition="'$(Configuration)' != 'Debug'">
     <OutputType>WinExe</OutputType>
-    <RunCommand>bin\Debug\net471\Integreat.WindowsService.exe</RunCommand>
+    
   </PropertyGroup>
+  
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="2.1.1" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <ProjectReference Include="..\Integreat.Batch\Integreat.Batch.csproj" />
+    <ProjectReference Include="..\Integreat.Configuration\Integreat.Configuration.csproj" />
+    <ProjectReference Include="..\Integreat.CSharp\Integreat.CSharp.csproj" />
+    <ProjectReference Include="..\Integreat.Powershell\Integreat.Powershell.csproj" />
+    <ProjectReference Include="..\Integreat.SQL\Integreat.SQL.csproj" />
+    <ProjectReference Include="..\Integreat\Integreat.csproj" />
+  </ItemGroup>
 
   <ItemGroup>
     <Reference Include="System.Configuration" />
     <Reference Include="System.Configuration.Install" />
     <Reference Include="System.ServiceProcess" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="appsettings.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   
   <!--	

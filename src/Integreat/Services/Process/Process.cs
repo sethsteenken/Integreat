@@ -8,7 +8,7 @@ namespace Integreat
         private readonly IProcessSetup _processSetup;
         private readonly IProcessExecutor _processExecutor;
 
-        internal Process(ProcessId id, IProcessLogger logger, IProcessSetup processSetup, IProcessExecutor processExecutor)
+        public Process(ProcessId id, IProcessLogger logger, IProcessSetup processSetup, IProcessExecutor processExecutor)
         {
             Guard.IsNotNull(id, nameof(ProcessId));
 

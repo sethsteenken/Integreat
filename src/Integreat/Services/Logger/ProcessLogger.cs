@@ -11,7 +11,7 @@ namespace Integreat
         private readonly Guid _processId;
         private readonly StringBuilder _resultBuilder;
 
-        internal ProcessLogger(ILogger<ProcessLogger> logger, ProcessId processId)
+        public ProcessLogger(ILogger<ProcessLogger> logger, ProcessId processId)
         {
             Guard.IsNotNull(processId, nameof(processId));
 
