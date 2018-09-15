@@ -13,7 +13,7 @@ namespace Integreat.PluginExecutor
         public AssemblyTypeLoader(string libraryPath, AppDomain appDomain)
         {
             _libraryPath = string.IsNullOrWhiteSpace(libraryPath) ? throw new ArgumentNullException(nameof(libraryPath)) : libraryPath.Trim();
-            _appDomain = appDomain;
+            _appDomain = appDomain ?? throw new ArgumentNullException(nameof(appDomain));
         }
 
         public Type LoadType(string typeName, string assemblyName)
