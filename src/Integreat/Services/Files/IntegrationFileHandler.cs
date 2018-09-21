@@ -19,6 +19,9 @@ namespace Integreat
 
         public IFile CopyToWorkingDirectory(Guid processId, string filePath)
         {
+            if (!_fileStorage.Exists(filePath))
+                throw new FileNotFoundException($"File at path '{filePath}' not found.");
+
             _logger.LogInfo("Waiting on file to be ready...");
             _fileStorage.WaitForFileReady(filePath, _settings.DropFileReadyTimeout);
             _logger.LogInfo("File ready.");

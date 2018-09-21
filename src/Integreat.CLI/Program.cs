@@ -1,4 +1,5 @@
 ﻿using McMaster.Extensions.CommandLineUtils;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.IO;
 using System.Threading;
@@ -11,7 +12,8 @@ namespace Integreat.CLI
         {
             var app = new CommandLineApplication();
             bool watching = false;
-            FileSystemWatcher watcher = null;
+            IWatcher watcher = null;
+            IServiceCollection services = new ServiceCollection();
 
             app.HelpOption();
 
@@ -28,41 +30,37 @@ namespace Integreat.CLI
                 var filePath = optionFilePath.Value();
                 watching = optionWatch.HasValue();
 
+                var file = new Integreat.File(filePath);
+
+                services.AddIntegreat()
+                    .AddSettings(new IntegrationSettings()
+                    {
+                        DropDirectory = file.Directory,
+                        DropFileName = file.FileName
+                    });
+
+                IServiceProvider serviceProvider = services.BuildServiceProvider();
+
                 if (watching)
                 {
-                    Console.WriteLine($"Watching filepath '{filePath}'...");
-
-                    var file = new Integreat.File(filePath);
-
                     Console.WriteLine($"Watching for file '{file.FileName}' in directory '{file.Directory}'...");
 
-                    watcher = new FileSystemWatcher(
-                        file.Directory,
-                        file.FileName)
-                    {
-                        NotifyFilter = NotifyFilters.LastWrite,
-                        InternalBufferSize = 65536
-                    };
-
-                    watcher.Changed += new FileSystemEventHandler((sender, e) =>
-                    {
-                        watcher.EnableRaisingEvents = false;
-
-                        Console.WriteLine("File changed - " + e.FullPath);
-
-                        watcher.EnableRaisingEvents = true;
-                    });
-
-                    watcher.Error += new ErrorEventHandler((sender, e) =>
-                    {
-                        Console.WriteLine("exception - " + e.GetException());
-                    });
-
-                    watcher.EnableRaisingEvents = true;
+                    watcher = serviceProvider.GetRequiredService<IWatcher>();
+                    watcher.Initialize();
                 }
                 else
                 {
-                    Console.WriteLine($"Executing filepath '{filePath}'...");
+                    Console.WriteLine($"Executing Integreat using file at '{filePath}'...");
+
+                    if (!System.IO.File.Exists(filePath))
+                    {
+                        Console.WriteLine($"File '{filePath}' not found.");
+                        return 1;
+                    }
+
+                    IProcessFactory processFactory = serviceProvider.GetRequiredService<IProcessFactory>();
+                    IProcess process = processFactory.Create();
+                    process.Execute(filePath);
                 }
                 
                 return 0;
