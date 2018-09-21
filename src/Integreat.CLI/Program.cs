@@ -24,6 +24,7 @@ namespace Integreat.CLI
 
             var optionWatch = app.Option("-w|--watch", "Set up file watcher for filepath.", CommandOptionType.NoValue);
             var optionWatchDuration = app.Option<int>("-wd|--watch-duration", "How long (in seconds) the file watcher should be active.", CommandOptionType.SingleValue);
+            var optionExecutableTypes = app.Option("-t|--types", "Executable Types", CommandOptionType.MultipleValue);
 
             app.OnExecute(() =>
             {
@@ -52,9 +53,9 @@ namespace Integreat.CLI
                 {
                     Console.WriteLine($"Executing Integreat using file at '{filePath}'...");
 
-                    if (!System.IO.File.Exists(filePath))
+                    if (!file.Exists)
                     {
-                        Console.WriteLine($"File '{filePath}' not found.");
+                        Console.WriteLine($"File '{file.FullPath}' not found.");
                         return 1;
                     }
 
