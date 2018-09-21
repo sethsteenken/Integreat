@@ -21,6 +21,7 @@ namespace Integreat.CLI
                 .IsRequired(errorMessage: "Filepath is required to run Integreat.");
 
             var optionWatch = app.Option("-w|--watch", "Set up file watcher for filepath.", CommandOptionType.NoValue);
+            var optionWatchDuration = app.Option<int>("-wd|--watch-duration", "How long (in seconds) the file watcher should be active.", CommandOptionType.SingleValue);
 
             app.OnExecute(() =>
             {
@@ -31,7 +32,7 @@ namespace Integreat.CLI
                 {
                     Console.WriteLine($"Watching filepath '{filePath}'...");
 
-                    var file = new File(filePath);
+                    var file = new Integreat.File(filePath);
 
                     Console.WriteLine($"Watching for file '{file.FileName}' in directory '{file.Directory}'...");
 
@@ -75,9 +76,18 @@ namespace Integreat.CLI
             {
                 if (watching)
                 {
-                    Console.WriteLine("waiting");
-                    new AutoResetEvent(false).WaitOne(15000);
-                    Console.WriteLine("after waitone");
+                    if (optionWatchDuration.HasValue() && optionWatchDuration.ParsedValue > 0)
+                    {
+                        Console.WriteLine($"Watching for {optionWatchDuration.ParsedValue} seconds...");
+                        new AutoResetEvent(false).WaitOne(optionWatchDuration.ParsedValue * 1000);
+                    }
+                    else
+                    {
+                        Console.WriteLine($"Watching until dismissed...");
+                        new AutoResetEvent(false).WaitOne();
+                    }
+
+                    Console.WriteLine("Watcher dismissed.");
                     watcher?.Dispose();
                 }
             }
