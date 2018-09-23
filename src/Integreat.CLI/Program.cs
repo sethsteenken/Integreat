@@ -1,12 +1,11 @@
-﻿using McMaster.Extensions.CommandLineUtils;
+﻿using Integreat.Batch;
+using Integreat.CSharp;
+using Integreat.SQL;
+using Integreat.Powershell;
+using McMaster.Extensions.CommandLineUtils;
 using Microsoft.Extensions.DependencyInjection;
 using System;
-using System.IO;
 using System.Threading;
-using Integreat.CSharp;
-using Integreat.Batch;
-using Integreat.Powershell;
-using Integreat.SQL;
 
 namespace Integreat.CLI
 {
@@ -21,13 +20,13 @@ namespace Integreat.CLI
 
             app.HelpOption();
 
-            var optionFilePath = app.Option("-f|--file <FILEPATH>", 
-                "The relative or absolute path to the integration package file.", 
+            var optionFilePath = app.Option("-f|--file <FILEPATH>",
+                "The relative or absolute path to the integration package file.",
                 CommandOptionType.SingleValue)
                 .IsRequired(errorMessage: "Filepath is required to run Integreat.");
 
             var optionWatch = app.Option("-w|--watch", "Set up file watcher for filepath.", CommandOptionType.NoValue);
-            var optionWatchDuration = app.Option<int>("-wd|--watch-duration", "How long (in seconds) the file watcher should be active.", CommandOptionType.SingleValue);
+            var optionWatchDuration = app.Option<int>("-wd|--watch-duration <DURATION_IN_SECONDS>", "How long (in seconds) the file watcher should be active.", CommandOptionType.SingleValue);
 
             app.OnExecute(() =>
             {
@@ -36,8 +35,15 @@ namespace Integreat.CLI
 
                 var file = new Integreat.File(filePath);
 
+                if (!watching && !file.Exists)
+                {
+                    Console.WriteLine($"File '{file.FullPath}' not found.");
+                    return 1;
+                }
+
                 services.AddIntegreat()
                     .AddBatchExecutable()
+                    .AddPowershellExecutable()
                     .AddCSharpPluginExecutable()
                     .AddSQLExecutable()
                     .AddSettings(new IntegrationSettings()
@@ -59,15 +65,9 @@ namespace Integreat.CLI
                 {
                     Console.WriteLine($"Executing Integreat using file at '{filePath}'...");
 
-                    if (!file.Exists)
-                    {
-                        Console.WriteLine($"File '{file.FullPath}' not found.");
-                        return 1;
-                    }
-
-                    IProcessFactory processFactory = serviceProvider.GetRequiredService<IProcessFactory>();
-                    IProcess process = processFactory.Create();
-                    process.Execute(filePath);
+                    serviceProvider.GetRequiredService<IProcessFactory>()
+                            .Create()
+                            .Execute(filePath);
                 }
                 
                 return 0;
@@ -75,7 +75,6 @@ namespace Integreat.CLI
 
             var result = app.Execute(args);
 
-            Console.WriteLine("execute result - " + result);
             
             if (result == 0)
             {
@@ -96,6 +95,8 @@ namespace Integreat.CLI
                     watcher?.Dispose();
                 }
             }
+
+            Console.WriteLine($"Integreat process ended with result {result}.");
 
             return result;
         }
