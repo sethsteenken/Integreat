@@ -3,6 +3,10 @@ using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.IO;
 using System.Threading;
+using Integreat.CSharp;
+using Integreat.Batch;
+using Integreat.Powershell;
+using Integreat.SQL;
 
 namespace Integreat.CLI
 {
@@ -24,7 +28,6 @@ namespace Integreat.CLI
 
             var optionWatch = app.Option("-w|--watch", "Set up file watcher for filepath.", CommandOptionType.NoValue);
             var optionWatchDuration = app.Option<int>("-wd|--watch-duration", "How long (in seconds) the file watcher should be active.", CommandOptionType.SingleValue);
-            var optionExecutableTypes = app.Option("-t|--types", "Executable Types", CommandOptionType.MultipleValue);
 
             app.OnExecute(() =>
             {
@@ -34,6 +37,9 @@ namespace Integreat.CLI
                 var file = new Integreat.File(filePath);
 
                 services.AddIntegreat()
+                    .AddBatchExecutable()
+                    .AddCSharpPluginExecutable()
+                    .AddSQLExecutable()
                     .AddSettings(new IntegrationSettings()
                     {
                         DropDirectory = file.Directory,
