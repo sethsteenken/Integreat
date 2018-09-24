@@ -25,8 +25,8 @@ namespace Integreat.CLI
                 CommandOptionType.SingleValue)
                 .IsRequired(errorMessage: "Filepath is required to run Integreat.");
 
-            var optionWatch = app.Option("-w|--watch", "Set up file watcher for filepath.", CommandOptionType.NoValue);
-            var optionWatchDuration = app.Option<int>("-wd|--watch-duration <DURATION_IN_SECONDS>", "How long (in seconds) the file watcher should be active.", CommandOptionType.SingleValue);
+            var optionWatch = app.Option("-w|--watch", "Optional. Set up file watcher for filepath.", CommandOptionType.NoValue);
+            var optionWatchDuration = app.Option<int>("-wd|--watch-duration <DURATION_IN_SECONDS>", "Optional. How long (in seconds) the file watcher should be active.", CommandOptionType.SingleValue);
 
             app.OnExecute(() =>
             {
