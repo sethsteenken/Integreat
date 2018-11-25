@@ -16,7 +16,7 @@ namespace Integreat
             _fileStorage = fileStorage;
         }
 
-        public static JsonSerializerSettings Settings { get; set; } = new JsonSerializerSettings()
+        public static JsonSerializerSettings Settings = new JsonSerializerSettings()
         {
             ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
             DateTimeZoneHandling = DateTimeZoneHandling.Utc
