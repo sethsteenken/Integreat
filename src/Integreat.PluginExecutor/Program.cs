@@ -9,9 +9,7 @@ namespace Integreat.PluginExecutor
         {
             try
             {
-                Executor executor = BuildExecutor(args);
-                var result = executor.ExecutePlugin();
-
+                var result = BuildExecutor(args).ExecutePlugin();
                 Console.WriteLine(result);
             }
             catch (Exception ex)

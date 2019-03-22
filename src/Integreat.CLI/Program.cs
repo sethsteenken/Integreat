@@ -75,7 +75,6 @@ namespace Integreat.CLI
 
             var result = app.Execute(args);
 
-            
             if (result == 0)
             {
                 if (watching)

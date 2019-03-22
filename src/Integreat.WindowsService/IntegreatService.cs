@@ -19,9 +19,7 @@ namespace Integreat.WindowsService
 
         protected override void OnStart(string[] args)
         {
-            var serviceProvider = BuildServiceProvider();
-
-            _folderWatcher = serviceProvider.GetRequiredService<IWatcher>();
+            _folderWatcher = BuildServiceProvider().GetRequiredService<IWatcher>();
             _folderWatcher.Initialize();
         }
 

@@ -42,7 +42,7 @@ namespace Integreat.Core
                     return default(T);
             }
 
-            if (!ValueParser.TryParse<T>(value, out T parsedValue))
+            if (!value.TryParse<T>(out T parsedValue))
                 throw new FormatException($"Could not parse parameter '{key}' value '{value}' to type {typeof(T).FullName}.");
 
             return parsedValue;
