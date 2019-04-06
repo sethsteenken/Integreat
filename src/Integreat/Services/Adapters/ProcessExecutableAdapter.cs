@@ -11,6 +11,12 @@ namespace Integreat
             Type = typeof(T).Name.Replace("Executable", "");
         }
 
+        protected ProcessExecutableAdapter(string typeName)
+        {
+            Guard.IsNotNull(typeName, nameof(typeName));
+            Type = typeName;
+        }
+
         public string Type { get; protected set; }
 
         protected string GetPropertyValue(PropertyInfo[] properties, dynamic value, string propName)
@@ -44,11 +50,14 @@ namespace Integreat
             else
                 throw new MissingMemberException(type.FullName, "Type");
 
-            exeTypeName = exeTypeName.Replace("Executable", "");
-
             if (exeTypeName != Type)
-                throw new InvalidOperationException($"Supplied Type configuration value '{exeTypeName}' does not match the registered adapter executable type of '{Type}'.");
+            {
+                exeTypeName = exeTypeName.Replace("Executable", "");
 
+                if (exeTypeName != Type)
+                    throw new InvalidOperationException($"Supplied Type configuration value '{exeTypeName}' does not match the registered adapter executable type of '{Type}'.");
+            }
+                
             if (properties.Exists("Timeout"))
                 timeout = (int)((configurationValues.Timeout as int?) ?? 0);
 
